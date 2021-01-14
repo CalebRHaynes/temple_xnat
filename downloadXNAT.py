@@ -21,10 +21,10 @@ Logs into xnat, downlaods subjects DICOMS
 '''
 
 def connect_pull(url, user, password, session, subject, outputDir):
-	with xnat.connect(url, user, password) as session:		
-		for sub in session.projects[session].subjects.values():
-			if subject == sub.label:
-				sub.download_dir(outputDir)
+        with xnat.connect(url, user, password) as connect:
+            for sub in connect.projects[session].subjects.values():
+	            if subject == sub.label:
+	                sub.download_dir(outputDir)
 
 def main():
 	connect_pull(url=confighttps, 
