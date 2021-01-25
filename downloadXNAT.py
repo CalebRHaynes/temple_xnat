@@ -97,10 +97,7 @@ def options_screen():
 		\n***OPTIONS***
 		\n1) NEW CONFIG 
 		\n2) DISPLAY CONFIG
-		\n3) CHANGE CONFIG
-		\n4) DELETE CONFIG
-		\n5) VIEW TABLE
-		\n6) EXIT
+		\n3) EXIT
 		'''
 	)
 		choice = input(">> ")
@@ -111,47 +108,35 @@ def options_screen():
                         with open('config.json') as f:
                             print('Delete or edit current user')
                     except IOError:
-                        url = input('URL (temple - https://xnat.cla.temple.edu):  ')
+                        url = input('URL (temple - https://xnat.cla.temple.edu): ')
                         username = input('Username: ')
                         session = input('Session: ')
                         output = input('Output Directory (DICOMS): ')
-                        User(url, username, session, output) 
+                        user_obj = User(username, url, session, output)
+                        with open('config.json', 'w') as f:
+                        	json.dump(json.dumps(user_obj .__dict__), f)
 
 
 		elif choice == '2':
-		    print('Print JSON \n\n\n\n\n\n')
+		    with open('config.json') as f:
+		    	data = json.load(f)
+		    	print(data)
 		elif choice == '3':
-		    print('EDIT JSON \n\n\n\n\n\n')
-		elif choice == '4':
-		    print('DELETE JSON \n\n\n\n\n\n')
-		elif choice == '5':
-		    print('PRINT TABLE \n\n\n\n\n\n')
-		elif choice == '6':
 			done = True
 		else:
-		    print("Invalid Choice \n\n\n\n\n\n")
+		    print("Invalid Choice")
 	pass
 
 class User:
-    def __init__(self, url, username, session, output):
+    def __init__(self, username, url, session, output):
         self.name = username
         self.url = url
         self.username = username
         self.session = session
         self.output = output
-
-
-        
-
-
-
-#JSON
-student_json = json.dumps(student_obj.__dict__)
-                                  
-print(student_json)
-
-
-
+    
+    def write_user():
+    	userdata = url, username, session, output
 
 def main():
 	home_screen()
