@@ -14,9 +14,9 @@ https://xnat.cla.temple.edu
 
 usage: 
 
-`python3 downloadXNAT.py CLAXNAT_username CLAXNAT_password session subject outputDir`
+`python3 downloadXNAT.py`
 
-Logs into xnat, downlaods subjects DICOMS
+Can log into xnat, downlaods subjects DICOMS
 
 As a python module:
 from downloadXNAT.py import connect_pull
