@@ -11,10 +11,6 @@ Logs into xnat, downlaods subjects DICOMS
 import os
 import json
 from pprint import pprint
-url='https://xnat.cla.temple.edu'
-user = 'CalebHaynes'
-session = 'LEARN'
-outputDir = os.getcwd()
 try:
 	import xnat
 except ImportError:
