@@ -25,18 +25,26 @@ usage: python3 downloadXNAT.py <XNAT_username> <XNAT_password> <session> <subjec
 Logs into xnat, downlaods subjects DICOMS
 '''
 
+
+class User:    
+    def __init__(self, url, username, session, output):
+        self.name = username
+        self.url = url
+password = ''
+
 def pass_prompt():
-	return input('Password: \n\n>> ')
+        try:
+            password
+        except:
+            return input('Password: \n\n>> ')
 
 def connect_pull(url, user, session, subject, outputDir):
-	print(url, user, session, subject, outputDir)
-	password = pass_prompt()
-	with xnat.connect(url, user, password) as connect:
-
-		for sub in connect.projects[session].subjects.values():
-			if subject == sub.label:
-				print(sub, sub.label, url, user, session, subject, outputDir)
-				sub.download_dir(outputDir)
+    password = pass_prompt()
+    with xnat.connect(url, user, password) as connect:
+        for sub in connect.projects[session].subjects.values():
+            if subject == sub.label:
+                print('Downloading... ... ...')
+                sub.download_dir(outputDir)
 
 def list_subjects(url, user, password, session):
 	with xnat.connect(url, user, password) as connect:
@@ -63,7 +71,7 @@ def home_screen():
 		\n6) EXIT
 		'''
 	)
-		choice = input("* ")
+		choice = input("~$")
 		if choice == '1':
 		    display_sublist()
 		elif choice == '2':
@@ -72,13 +80,13 @@ def home_screen():
 			subject = input('Input Subject Number: ')
 			connect_pull(url, user, session, subject, outputDir)
 		elif choice == '4':
-			pprint('Uh oh not built yet ;/')
+			print('Uh oh not built yet ;/')
 		elif choice == '5':
 			options_screen()
 		elif choice == '6':
 		    done = True
 		else:
-		    pprint("Invalid Choice")
+		    print("Invalid Choice")
 		
 
 def options_screen():
@@ -97,20 +105,51 @@ def options_screen():
 	)
 		choice = input(">> ")
 		if choice == '1':
-		    pprint('Make New \n\n\n\n\n\n')
+                    print('Make New:')
+
+                    try:
+                        with open('config.json') as f:
+                            print('Delete or edit current user')
+                    except IOError:
+                        url = input('URL (temple - https://xnat.cla.temple.edu):  ')
+                        username = input('Username: ')
+                        session = input('Session: ')
+                        output = input('Output Directory (DICOMS): ')
+                        User(url, username, session, output) 
+
+
 		elif choice == '2':
-		    pprint('Print JSON \n\n\n\n\n\n')
+		    print('Print JSON \n\n\n\n\n\n')
 		elif choice == '3':
-		    pprint('EDIT JSON \n\n\n\n\n\n')
+		    print('EDIT JSON \n\n\n\n\n\n')
 		elif choice == '4':
-		    pprint('DELETE JSON \n\n\n\n\n\n')
+		    print('DELETE JSON \n\n\n\n\n\n')
 		elif choice == '5':
-		    pprint('PRINT TABLE \n\n\n\n\n\n')
+		    print('PRINT TABLE \n\n\n\n\n\n')
 		elif choice == '6':
 			done = True
 		else:
-		    pprint("Invalid Choice \n\n\n\n\n\n")
+		    print("Invalid Choice \n\n\n\n\n\n")
 	pass
+
+class User:
+    def __init__(self, url, username, session, output):
+        self.name = username
+        self.url = url
+        self.username = username
+        self.session = session
+        self.output = output
+
+
+        
+
+
+
+#JSON
+student_json = json.dumps(student_obj.__dict__)
+                                  
+print(student_json)
+
 
 
 
